@@ -1,0 +1,77 @@
+<HTML>
+<HEAD>
+<TITLE>Se necesita clave</TITLE>
+
+</HEAD>
+<BODY>
+<P>esta es la cuarta web
+
+Un directorio que queramos protejer con contraseña (evidentemente), en el que introduciremos las páginas "restringidas".
+
+En ese directorio, además de esas páginas, colocaremos dos archivos de texto:
+
+El primero se llamará .htaccess (si, con un punto delante del nombre), y contendrá el siguente texto:
+
+AuthName "Texto de la ventana"
+AuthType Basic
+AuthUserFile /ruta/al/directorio/protegido/.claves
+require valid-user
+
+Donde pone "Texto de la ventana" puedes poner tu propio texto, que se mostrará en la ventana donde te pide el nombre de usuario y la clave (las comillas solo son necesarias si el texto contiene espacios).
+
+la "/ruta/al/directorio/protegido/" es eso, la ruta dentro del host donde está el directorio que quieres proteger.
+
+La ruta de ese directorio no tiene por qué ser la misma que la URL a ese directorio (De hecho no suele serlo). Esta es, normalmente, la ruta que usas en tu programa de FTP. Si tienes dudas, consulta al administrador de tu sistema.
+El nombre que hay tras la ruta (.claves) es el nombre del fichero donde, como veremos más adelante, se guardarán los nombres de usuario y claves. Puedes usar el nombre que prefieras.
+
+El nombre del fichero .htaccess tiene que ser necesariamente ese. No olvides el punto delante del nombre (esta es la forma que tienen los sistemas Linux/UNIX de indicar que es un archivo oculto). Puedes asignar el nombre que quieras al archivo de claves, pero también deberás ocultarlo poniendole el punto delante. Esto se hace para evitar que alguien pueda ver tu archivo de claves.
+El archivo .htaccess debe terminar con un retorno de carro (es decir,despues de escribir la última línea, pulsas la tecla "enter", como si fueras a escribir una línea mas).
+
+El otro archivo que tienes que situar en el directorio es, evidentemente, el archivo de claves (en nuestro caso .claves).
+
+Este archivo tiene el siguiente formato:
+
+yo:DVt5rEaVF7Fy2
+usuario:jsWejx/5HC6FU
+otro:q8RZXNKJtyz.o
+
+Este archivo también debe terminar con un retorno de carro.
+
+¿Pero qué demonios es esto?
+
+Esto es un archivo de claves para tres usuarios, que usan los nombres "yo", "usuario" y "otro" respectivamente.
+
+Cada uno de los nombres de usuario está seguido de su clave encriptada, separada por el signo "dos puntos" (:).
+
+Pero ¿Cómo se encripta la clave?
+
+Bueno. En principio necesitas tener acceso al sistema en el que trabajas (por ejemplo, mediante telnet). Y ejecutar allí el comando htpasswd, que sirve precisamente para crear ficheros de claves. Para ello tienes que hacer lo siguiente:
+
+htpasswd [ -c ] archivo usuario
+
+Donde "archivo" es el nombre del archivo de claves, "usuario" es el nombre de usuario, y "-c" es opcional, e indica que queremos crear un nuevo archivo con ese nombre. Tras hacer esto te pedirá la clave (y te la volverá a pedir para confirmarla) y escribirá él mismo el archivo.
+
+Pero, normalmente, no tenemos acceso a cuentas de telnet con las que poder ejecutar comandos en el servidor. ¿Qué podemos hacer entonces?
+
+Los que tengais un UNIX o Linux en casa lo teneis muy fácil: ¡El comando htpasswd está disponible en vuestro propio ordenador! Solo teneis que hacer lo mismo que he indicado arriba en vuestra propia máquina.
+
+El comando htpasswd tiene muchas más opciones. tanto si lo ejecutas en un servidor como si lo haces en tu propio ordenador, puedes ver todas ellas en la correspondiente página man (teclea man htpasswd)
+Pero no todo el mundo tiene un UNIX/Linux en casa. Cómo nos las apañamos entonces?
+
+Vuestro amigo Allan Psicobyte no os iba a dejar tirados de ese modo, así que he rebuscado por la red hasta encontrar lo que necesitais:
+
+Y lo que necesitais es un pequeño programa totalmente freeware (gratis) que haga lo mismo que hace htpasswd.
+
+Este programa se llama htpw-dos.exe, y puedes descargarlo en este link (comprimido con zip, 31'2 Kb.). Funciona en DOS y Windows. Desafortunadamente, no he encontrado versiones para otros sistemas operativos.
+
+El uso de este programa es exactamente igual al que hemos visto para htpasswd.
+
+Y bién. Una vez que hemos creado nuestro directorio y lo hemos protegido, ya solo nos falta subir las páginas que queramos a él y ver un ejemplo de directorio protegido con este método.
+
+Lo malo de este método es que casi ningún servidor (y mucho menos gratuito) te da opción a crear o modificar el archivo .htaccess.
+
+Creo que ya es suficente para este artículo. Hasta pronto.
+</p>
+
+</BODY>
+</HTML>
